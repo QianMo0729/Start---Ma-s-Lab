@@ -1,0 +1,251 @@
+% !TeX program = xelatex
+% Compile with local XeLaTeX. Certificate images use absolute filesystem paths.
+\documentclass[UTF8,a4paper,11pt,fontset=fandol]{ctexart}
+\usepackage[top=18mm,bottom=19mm,left=20mm,right=20mm,headheight=14pt,headsep=5mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{texgyretermes-regular.otf}[BoldFont=texgyretermes-bold.otf,ItalicFont=texgyretermes-italic.otf]
+\setmonofont{lmmono10-regular.otf}[Scale=0.9]
+\usepackage{graphicx,booktabs,tabularx,array,float,caption,fancyhdr}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{hyperref}
+\hypersetup{pdftitle={第一周学习周报},pdfauthor={He Song}}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{3pt}
+\setlength{\emergencystretch}{1em}
+\setlength{\intextsep}{8pt}
+\linespread{1.06}
+\raggedbottom
+\ctexset{section={format=\large\bfseries,beforeskip=10pt,afterskip=5pt}}
+\captionsetup{font=small,labelfont=bf,labelsep=quad,skip=4pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Ma's Lab}
+\fancyhead[R]{\small 第一周学习周报}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries 第一周学习周报}\par
+\vspace{6pt}
+{\normalsize He Song\quad\textbar\quad 2026 年 10 月 3 日}
+\end{center}
+\vspace{2pt}
+
+\noindent\textbf{摘要：}本周期完成了 freeCodeCamp 响应式网页设计课程及 JavaScript 部分，以及 Kaggle Python、Pandas 两门微课程；使用 Git 管理学习项目并推送至 GitHub；并选取了相关数据集以便后续使用。同时订阅了相关学者的学术动态。通过这些学习，我初步了解了网页开发、数据处理与版本管理在后续实践中的作用。目前主要的疑惑是，大模型 Agent 与可视化、HCI 在具体研究中如何结合。
+
+\section{任务要求}
+《课题组新成员入门学习计划》将第 1--2 周设为基础技能阶段，主要要求如下。
+
+\begin{table}[H]
+\centering
+\small
+\caption{基础技能阶段的学习要求}
+\label{tab:requirements}
+\renewcommand{\arraystretch}{1.18}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash\bfseries}p{30mm}X@{}}
+\toprule
+学习部分 & 应完成的内容 \\
+\midrule
+Web 开发 & 完成 Responsive Web Design；JavaScript 学至基础算法部分，重点掌握 DOM 操作与 Promise、\texttt{fetch} 等异步编程。 \\
+Python 数据处理 & 学习 Python 基础，完成 Kaggle Python 和 Pandas 微课程；第 2 周末选定公开数据集，完成清洗、基本统计及一页数据概况。 \\
+Git 与 GitHub & 掌握 git、commit、branch、merge 和 push，完成 Introduction to GitHub 入门练习。 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Web 开发学习}
+已完成 freeCodeCamp 响应式网页设计课程并取得认证，JavaScript 的“DOM 操作”和“异步编程”部分也已完成。
+
+通过学习，我更清楚了 HTML、CSS 与 JavaScript 的分工。尤其是描述性 HTML 和 表现性 HTML 的区别是我之前没有涉足的。这些内容为后续制作交互式展示页面打下了基础。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=112mm]{/Users/mason/Desktop/Ma's Lab/Getting Start/Cartificates/ResponseWebDesing.png}
+\caption{freeCodeCamp 响应式网页设计证书}
+\label{fig:web}
+\end{figure}
+
+\clearpage
+\section{Python 与 pandas 学习}
+已完成 Kaggle Python 和 Pandas 两门微课程。我的主要收获是了解了如何用 Python 组织数据处理过程，并用 pandas 进行筛选与统计。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=110mm]{/Users/mason/Desktop/Ma's Lab/Getting Start/Cartificates/QianMoA - Python.png}
+\caption{Kaggle Python 完成证书}
+\label{fig:python}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=110mm]{/Users/mason/Desktop/Ma's Lab/Getting Start/Cartificates/QianMoA - Pandas.png}
+\caption{Kaggle Pandas 完成证书}
+\label{fig:pandas}
+\end{figure}
+
+\section{版本控制与学术关注}
+已使用 Git 管理学习项目，并通过 \texttt{git push} 提交到了 GitHub 的 \textit{Private Repo} 中。
+
+已订阅 Huamin Qu、Ashish Vaswani 和 Duen Horng Chau 的学术动态，希望逐步了解相关研究。
+
+\section{数据集的选取}
+我选取了数据集 \href{https://www.kaggle.com/datasets/adilshamim8/salaries-for-data-science-jobs}{Data Science, AI \& ML Job Salaries in 2025} 作为我后续任务的数据集。
+
+通过 python 代码，对数据进行了初步的清洗和整理：
+
+python 代码：
+\begin{verbatim}
+import pandas as pd
+
+url = "/Users/mason/Desktop/Ma's Lab/Getting Start/Dataset/salaries.csv"
+raw = pd.read_csv(url)
+
+print("数据规模：", raw.shape)
+print(raw.head())
+raw.info()
+
+data = raw.copy()
+data.columns = data.columns.str.strip()
+
+for col in data.select_dtypes(include=["object", "string"]).columns:
+    data[col] = data[col].str.strip().replace("", pd.NA)
+
+data["salary_in_usd"] = pd.to_numeric(
+    data["salary_in_usd"], errors="coerce"
+)
+
+print("\n各列缺失值：")
+print(data.isna().sum())
+
+print("\n完全相同的额外行数：", data.duplicated().sum())
+
+invalid_salary = (
+    data["salary_in_usd"].isna()
+    | data["salary_in_usd"].le(0)
+)
+print("无法用于薪资分析的行数：", invalid_salary.sum())
+
+clean = data.loc[~invalid_salary].copy()
+
+print("\n美元薪资描述统计：")
+print(clean["salary_in_usd"].describe().round(2))
+
+print("\n记录数最多的 5 个岗位：")
+print(clean["job_title"].value_counts().head(5))
+
+print("\n按经验等级统计薪资：")
+print(
+    clean.groupby("experience_level")["salary_in_usd"]
+    .agg(["count", "mean", "median"])
+    .reindex(["EN", "MI", "SE", "EX"])
+    .round(2)
+)
+
+print("\n公司所在地区占比（前 5）：")
+print(
+    clean["company_location"]
+    .value_counts(normalize=True)
+    .head(5)
+    .mul(100)
+    .round(2)
+)
+\end{verbatim}
+
+输出结果：
+\begin{verbatim}
+
+数据规模： (151445, 11)
+   work_year experience_level employment_type       job_title  ...  
+0       2025               EX              FT    Head of Data  ... 
+1       2025               EX              FT    Head of Data  ...
+2       2025               SE              FT  Data Scientist  ...
+3       2025               SE              FT  Data Scientist  ...                            
+4       2025               MI              FT        Engineer  ...
+
+  employee_residence remote_ratio  company_location company_size
+0                 US            0                US            M
+1                 US            0                US            M
+2                 US            0                US            M
+3                 US            0                US            M
+4                 US          100                US            M
+
+[5 rows x 11 columns]
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 151445 entries, 0 to 151444
+Data columns (total 11 columns):
+ #   Column              Non-Null Count   Dtype 
+---  ------              --------------   ----- 
+ 0   work_year           151445 non-null  int64 
+ 1   experience_level    151445 non-null  object
+ 2   employment_type     151445 non-null  object
+ 3   job_title           151445 non-null  object
+ 4   salary              151445 non-null  int64 
+ 5   salary_currency     151445 non-null  object
+ 6   salary_in_usd       151445 non-null  int64 
+ 7   employee_residence  151445 non-null  object
+ 8   remote_ratio        151445 non-null  int64 
+ 9   company_location    151445 non-null  object
+ 10  company_size        151445 non-null  object
+dtypes: int64(4), object(7)
+memory usage: 12.7+ MB
+
+各列缺失值：
+work_year             0
+experience_level      0
+employment_type       0
+job_title             0
+salary                0
+salary_currency       0
+salary_in_usd         0
+employee_residence    0
+remote_ratio          0
+company_location      0
+company_size          0
+dtype: int64
+
+完全相同的额外行数： 79532
+无法用于薪资分析的行数： 0
+
+美元薪资描述统计：
+count    151445.00
+mean     157527.46
+std       74150.77
+min       15000.00
+25%      105800.00
+50%      146100.00
+75%      198000.00
+max      800000.00
+Name: salary_in_usd, dtype: float64
+
+记录数最多的 5 个岗位：
+job_title
+Data Scientist       18751
+Software Engineer    16948
+Data Engineer        16352
+Data Analyst         13779
+Engineer             11004
+Name: count, dtype: int64
+
+按经验等级统计薪资：
+                  count       mean    median
+experience_level                            
+EN                13663   98961.74   86600.0
+MI                46128  142301.18  130000.0
+SE                87491  172657.76  161000.0
+EX                 4163  200471.43  189370.0
+
+公司所在地区占比（前 5）：
+company_location
+US    89.52
+CA     4.10
+GB     2.76
+AU     0.39
+NL     0.32
+Name: proportion, dtype: float64
+\end{verbatim}
+
+\section{疑惑与希望获得的指导}
+Agent 主要研究如何让大模型自主完成复杂任务，看起来与可视化、HCI 有些差异，为什么课题组会同时选择这三个方向？“为 Agent 设计人机协作界面”是否是它们的主要连接点，还是还有其他交叉方式？
+
+\end{document}
